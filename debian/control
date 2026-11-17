@@ -1,0 +1,24 @@
+Source: home-assistant-on-ucs
+Section: univention
+Priority: optional
+Maintainer: UCS Community Packaging <maintainer@example.invalid>
+Build-Depends:
+ debhelper-compat (= 13),
+ univention-config-dev,
+ univention-join-dev,
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+
+Package: home-assistant-on-ucs
+Architecture: all
+Depends:
+ apache2,
+ docker-compose,
+ docker.io,
+ python3-yaml,
+ univention-config,
+ univention-directory-manager-tools,
+ univention-firewall,
+ univention-join,
+ ${misc:Depends},
+Description: Home Assistant container integration for UCS 5.2

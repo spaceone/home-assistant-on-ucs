@@ -1,0 +1,7 @@
+*.deb
+*.build
+*.buildinfo
+*.changes
+*.dsc
+__pycache__/
+.pytest_cache/

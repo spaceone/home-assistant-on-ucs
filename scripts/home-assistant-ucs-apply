@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+
+ucr commit /opt/home-assistant-ucs/compose.yaml \
+    /etc/home-assistant-ucs/ldap.json \
+    /etc/home-assistant-ucs/configuration.default.yaml \
+    /etc/apache2/sites-available/home-assistant-ucs.conf
+
+/usr/lib/home-assistant-on-ucs/home-assistant-ucs-init
+
+apache2ctl configtest
+systemctl reload apache2
+systemctl restart home-assistant-ucs.service

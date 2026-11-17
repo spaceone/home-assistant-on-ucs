@@ -1,0 +1,5 @@
+# local Home Assistant configuration, never overwritten by UCR
+# maps are merged recursively; lists and scalars in this file replace package values
+# keep an emergency local authentication provider or owner account available
+
+{}

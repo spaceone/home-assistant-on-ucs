@@ -1,0 +1,52 @@
+@!@
+import ipaddress
+import json
+import re
+
+v = configRegistry.get
+image = v('homeassistant/image', 'ghcr.io/home-assistant/home-assistant:2026.2.3')
+if not re.fullmatch(r'ghcr\.io/home-assistant/home-assistant:2026\.2(?:\.[0-9]+)?', image):
+    raise ValueError('Only Home Assistant 2026.2.x images are supported')
+
+port = v('homeassistant/http-port', '8123')
+if not port.isdigit() or not 1 <= int(port) <= 65535:
+    raise ValueError('Invalid Home Assistant host port')
+
+network = ipaddress.ip_network(v('homeassistant/docker/subnet', '172.29.83.0/24'), strict=True)
+gateway = ipaddress.ip_address(v('homeassistant/docker/gateway', '172.29.83.1'))
+if gateway not in network or gateway in (network.network_address, network.broadcast_address):
+    raise ValueError('Docker gateway must be a usable address in the Docker subnet')
+
+print('version: "3.8"')
+print('services:')
+print('  homeassistant:')
+print('    build:')
+print('      context: /usr/share/home-assistant-on-ucs/container')
+print('      args:')
+print('        HA_IMAGE: ' + json.dumps(image))
+print('    image: ' + json.dumps('home-assistant-ucs:2026.2'))
+print('    restart: "no"')
+print('    environment:')
+print('      TZ: ' + json.dumps(v('homeassistant/timezone', 'Europe/Berlin')))
+print('    ports:')
+print('      - ' + json.dumps('127.0.0.1:' + port + ':8123'))
+print('    volumes:')
+for mount in (
+    '/var/lib/home-assistant-ucs/config:/config',
+    '/etc/home-assistant-ucs/ldap.json:/etc/home-assistant-ucs/ldap.json:ro',
+    '/etc/univention/ssl/ucsCA/CAcert.pem:/etc/ssl/certs/ucsCA.pem:ro',
+    '/etc/localtime:/etc/localtime:ro',
+    '/etc/machine.secret:/run/homeassistant-ucs/machine.secret:ro',
+):
+    print('      - ' + json.dumps(mount))
+
+print('    networks:')
+print('      - ha_ucs')
+print('networks:')
+print('  ha_ucs:')
+print('    driver: bridge')
+print('    ipam:')
+print('      config:')
+print('        - subnet: ' + json.dumps(str(network)))
+print('          gateway: ' + json.dumps(str(gateway)))
+@!@

@@ -1,0 +1,7 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with ucr,univention-join
+
+override_dh_installsystemd:
+	dh_installsystemd --name=home-assistant-ucs --no-start

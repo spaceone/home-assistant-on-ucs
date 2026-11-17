@@ -1,0 +1,23 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+    - id: check-added-large-files
+    - id: check-json
+      exclude: "conffiles/.*[.]json$"
+    - id: check-xml
+      exclude: "conffiles/.*[.]xml$"
+    - id: check-yaml
+      exclude: "conffiles/.*[.]yaml$"
+    - id: check-merge-conflict
+    - id: pretty-format-json
+      exclude: "conffiles/.*[.]json$"
+      args:
+        - --autofix
+        - --no-ensure-ascii
+    - id: trailing-whitespace
+  - repo: https://git.knut.univention.de/univention/infrastructure/pre-commit-debian.git
+    rev: v1.1.0
+    hooks:
+      - id: debian-control
+      - id: debian-changelog

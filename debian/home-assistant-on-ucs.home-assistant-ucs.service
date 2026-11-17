@@ -1,0 +1,21 @@
+[Unit]
+Description=Home Assistant on UCS
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/home-assistant-ucs
+ExecStartPre=/usr/lib/home-assistant-on-ucs/home-assistant-ucs-init
+ExecStartPre=/usr/bin/docker-compose -p home-assistant-ucs -f /opt/home-assistant-ucs/compose.yaml config -q
+ExecStart=/usr/bin/docker-compose -p home-assistant-ucs -f /opt/home-assistant-ucs/compose.yaml up -d --build --remove-orphans
+ExecStop=/usr/bin/docker-compose -p home-assistant-ucs -f /opt/home-assistant-ucs/compose.yaml down
+ExecReload=/usr/bin/docker-compose -p home-assistant-ucs -f /opt/home-assistant-ucs/compose.yaml config -q
+ExecReload=/usr/bin/docker-compose -p home-assistant-ucs -f /opt/home-assistant-ucs/compose.yaml up -d --build --remove-orphans
+TimeoutStartSec=1200
+TimeoutStopSec=120
+
+[Install]
+WantedBy=multi-user.target

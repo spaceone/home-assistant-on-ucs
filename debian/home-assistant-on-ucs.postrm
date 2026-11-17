@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+
+# keep local configuration and home assistant storage on removal
+
+#DEBHELPER#
+
+exit 0

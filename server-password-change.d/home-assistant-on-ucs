@@ -1,0 +1,14 @@
+#!/bin/sh
+
+case "${1:-}" in
+    postchange)
+        # recreate the container so the machine secret bind mount tracks the new inode
+        if systemctl is-active --quiet home-assistant-ucs.service; then
+            if ! systemctl restart home-assistant-ucs.service; then
+                logger -t home-assistant-on-ucs 'container restart failed after password rotation'
+            fi
+        fi
+        ;;
+esac
+
+exit 0

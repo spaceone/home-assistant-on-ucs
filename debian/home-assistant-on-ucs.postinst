@@ -1,0 +1,37 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    configure)
+        ucr set \
+            "homeassistant/domain?homeassistant.$(ucr get domainname)" \
+            'homeassistant/http-port?8123' \
+            'homeassistant/image?ghcr.io/home-assistant/home-assistant:2026.2.3' \
+            'homeassistant/timezone?Europe/Berlin' \
+            'homeassistant/docker/subnet?172.29.83.0/24' \
+            'homeassistant/docker/gateway?172.29.83.1' \
+            'homeassistant/apache/enabled?yes' \
+            'homeassistant/ldap/security?starttls' \
+            'homeassistant/ldap/port?7389' \
+            'homeassistant/ldap/enabled?yes'
+
+        ucr commit /opt/home-assistant-ucs/compose.yaml \
+            /etc/home-assistant-ucs/ldap.json \
+            /etc/home-assistant-ucs/configuration.default.yaml \
+            /etc/apache2/sites-available/home-assistant-ucs.conf
+
+        /usr/lib/home-assistant-on-ucs/home-assistant-ucs-init
+
+        a2enmod proxy proxy_http proxy_wstunnel headers ssl >/dev/null
+        a2ensite home-assistant-ucs.conf >/dev/null
+        if apache2ctl configtest; then
+            systemctl reload apache2 || true
+        else
+            echo 'home-assistant-on-ucs: Apache config invalid; check TLS certificate' >&2
+        fi
+        ;;
+esac
+
+#DEBHELPER#
+
+exit 0

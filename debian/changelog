@@ -1,0 +1,5 @@
+home-assistant-on-ucs (0.1.0) unstable; urgency=medium
+
+  * Initial Home Assistant for UCS 5.2
+
+ -- Florian Best <best@univention.de>  Tue, 23 Aug 2022 16:41:45 +0200

@@ -1,0 +1,30 @@
+@!@
+import json
+
+v = configRegistry.get
+base = v('ldap/base', 'dc=example,dc=invalid')
+security = v('homeassistant/ldap/security', 'starttls').lower()
+if security not in ('starttls', 'ldaps'):
+    raise ValueError('Invalid LDAP protocol')
+
+port = int(v('homeassistant/ldap/port', '7389' if security == 'starttls' else '7636'))
+if not 1 <= port <= 65535:
+    raise ValueError('Invalid LDAP port')
+
+obj = {
+    'enabled': configRegistry.is_true('homeassistant/ldap/enabled', True),
+    'host': v('homeassistant/ldap/host', v('ldap/master', 'localhost')),
+    'port': port,
+    'security': security,
+    'base_dn': v('homeassistant/ldap/base', base),
+    'bind_dn': v('homeassistant/ldap/binddn', v('ldap/hostdn', '')),
+    'user_filter': v('homeassistant/ldap/user-filter', '(&(objectClass=posixAccount)(uid={username}))'),
+    'user_group': v('homeassistant/ldap/user-group', 'cn=homeassistant-users,cn=groups,' + base),
+    'admin_group': v('homeassistant/ldap/admin-group', 'cn=homeassistant-admins,cn=groups,' + base),
+    'group_member_attribute': v('homeassistant/ldap/group-member-attribute', 'uniqueMember'),
+    'ca_file': '/etc/ssl/certs/ucsCA.pem',
+    'bind_secret_file': '/run/homeassistant-ucs/machine.secret',
+    'timeout_seconds': int(v('homeassistant/ldap/timeout', '8')),
+}
+print(json.dumps(obj, indent=2))
+@!@

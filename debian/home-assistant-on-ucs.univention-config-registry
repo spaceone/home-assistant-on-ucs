@@ -1,0 +1,21 @@
+Type: file
+File: opt/home-assistant-ucs/compose.yaml
+Variables: ^homeassistant/(image|http-port|timezone|docker/.*)$
+Mode: 0644
+
+Type: file
+File: etc/home-assistant-ucs/ldap.json
+Variables: ^homeassistant/ldap/.*
+Variables: ^ldap/(base|master|hostdn)$
+Mode: 0644
+
+Type: file
+File: etc/home-assistant-ucs/configuration.default.yaml
+Variables: ^homeassistant/(ldap/enabled|docker/.*)$
+Mode: 0644
+
+Type: file
+File: etc/apache2/sites-available/home-assistant-ucs.conf
+Variables: ^homeassistant/(domain|http-port|apache/.*)$
+Variables: ^(hostname|domainname)$
+Mode: 0644

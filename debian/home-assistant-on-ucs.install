@@ -1,0 +1,9 @@
+assets/home-assistant.svg usr/share/home-assistant-on-ucs/
+configuration.local.yaml etc/home-assistant-ucs/
+container/Dockerfile usr/share/home-assistant-on-ucs/container/
+container/ldap-auth.py usr/share/home-assistant-on-ucs/container/
+scripts/home-assistant-ucs-apply usr/sbin/
+scripts/home-assistant-ucs-init usr/lib/home-assistant-on-ucs/
+scripts/home-assistant-ucs-merge-config usr/lib/home-assistant-on-ucs/
+scripts/home-assistant-ucs-validate usr/lib/home-assistant-on-ucs/
+server-password-change.d/home-assistant-on-ucs usr/lib/univention-server/server_password_change.d/

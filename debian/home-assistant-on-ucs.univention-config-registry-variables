@@ -1,0 +1,113 @@
+[homeassistant/domain]
+Description[en]=Public Home Assistant HTTPS hostname
+Description[de]=Öffentlicher HTTPS-DNS-Name von Home Assistant
+Categories=service-home-assistant
+Type=str
+
+[homeassistant/http-port]
+Description[en]=Localhost port published by the container
+Description[de]=Lokaler Host-Port des Home-Assistant-Containers
+Categories=service-home-assistant
+Type=int
+
+[homeassistant/image]
+Description[en]=Pinned upstream Home Assistant image in the 2026.2 series
+Description[de]=Festgelegtes Home-Assistant-Container-Image aus der Versionsreihe 2026.2
+Categories=service-home-assistant
+Type=str
+
+[homeassistant/timezone]
+Description[en]=Timezone used by Home Assistant container
+Description[de]=Zeitzone des Home-Assistant-Containers
+Categories=service-home-assistant
+Type=str
+
+[homeassistant/apache/enabled]
+Description[en]=Render the Apache HTTPS virtual host
+Description[de]=Apache-HTTPS-VirtualHost für Home Assistant erzeugen
+Categories=service-home-assistant
+Type=bool
+
+[homeassistant/docker/subnet]
+Description[en]=Private Docker bridge IPv4 subnet, must not collide with other networks
+Description[de]=Privates IPv4-Subnetz der Docker-Bridge ohne Überschneidung mit anderen Netzwerken
+Categories=service-home-assistant
+Type=str
+
+[homeassistant/docker/gateway]
+Description[en]=Private Docker bridge gateway used as Home Assistant trusted proxy
+Description[de]=Gateway-Adresse der Docker-Bridge für den vertrauenswürdigen Reverse Proxy
+Categories=service-home-assistant
+Type=str
+
+[homeassistant/ldap/enabled]
+Description[en]=Enable command line LDAP provider in Home Assistant configuration
+Description[de]=LDAP-Anmeldung über den Command-Line-Authentifizierungsanbieter aktivieren
+Categories=service-home-assistant
+Type=bool
+
+[homeassistant/ldap/host]
+Description[en]=UCS OpenLDAP server hostname
+Description[de]=Hostname des UCS-OpenLDAP-Servers
+Categories=service-home-assistant
+Type=str
+
+[homeassistant/ldap/port]
+Description[en]=UCS OpenLDAP port, normally 7389 for STARTTLS or 7636 for LDAPS
+Description[de]=UCS-OpenLDAP-Port, üblicherweise 7389 für STARTTLS oder 7636 für LDAPS
+Categories=service-home-assistant
+Type=int
+
+[homeassistant/ldap/security]
+Description[en]=LDAP encryption protocol, starttls or ldaps
+Description[de]=LDAP-Verschlüsselungsverfahren: starttls oder ldaps
+Categories=service-home-assistant
+Type=str
+
+[homeassistant/ldap/base]
+Description[en]=LDAP base DN used for locating users
+Description[de]=LDAP-Basis-DN für die Benutzersuche
+Categories=service-home-assistant
+Type=str
+
+[homeassistant/ldap/binddn]
+Description[en]=DN of LDAP account used to search for users
+Description[de]=DN des LDAP-Kontos für die Benutzersuche
+Categories=service-home-assistant
+Type=str
+
+[homeassistant/ldap/user-filter]
+Description[en]=LDAP user search filter using {username} placeholder
+Description[de]=LDAP-Suchfilter für Benutzer mit dem Platzhalter {username}
+Categories=service-home-assistant
+Type=str
+
+[homeassistant/ldap/user-group]
+Description[en]=DN of UCS group permitted to log in
+Description[de]=DN der UCS-Gruppe mit Anmeldeberechtigung
+Categories=service-home-assistant
+Type=str
+
+[homeassistant/ldap/admin-group]
+Description[en]=DN of UCS administrator group
+Description[de]=DN der UCS-Gruppe mit Administratorrechten
+Categories=service-home-assistant
+Type=str
+
+[homeassistant/ldap/group-member-attribute]
+Description[en]=LDAP membership attribute in UCS group, normally uniqueMember
+Description[de]=Attribut für die Gruppenmitgliedschaft im UCS-LDAP, üblicherweise uniqueMember
+Categories=service-home-assistant
+Type=str
+
+[homeassistant/ldap/timeout]
+Description[en]=LDAP search and bind timeout in seconds
+Description[de]=Zeitüberschreitung für LDAP-Suche und Bind in Sekunden
+Categories=service-home-assistant
+Type=int
+
+[homeassistant/firewall/direct-access]
+Description[en]=Enable a UCS firewall rule for optional direct HTTP access
+Description[de]=UCS-Firewallregel für optionalen direkten HTTP-Zugriff aktivieren
+Categories=service-home-assistant
+Type=bool

@@ -1,0 +1,3 @@
+#!/bin/sh
+set -eu
+/usr/bin/docker-compose -p home-assistant-ucs -f /opt/home-assistant-ucs/compose.yaml config -q

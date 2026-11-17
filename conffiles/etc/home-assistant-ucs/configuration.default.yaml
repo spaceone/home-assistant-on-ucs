@@ -1,0 +1,24 @@
+# generated package defaults, edit configuration.local.yaml instead
+@!@
+import ipaddress
+import json
+
+v = configRegistry.get
+network = ipaddress.ip_network(v('homeassistant/docker/subnet', '172.29.83.0/24'), strict=True)
+gateway = ipaddress.ip_address(v('homeassistant/docker/gateway', '172.29.83.1'))
+if gateway not in network or gateway in (network.network_address, network.broadcast_address):
+    raise ValueError('Invalid Docker bridge gateway')
+
+print('homeassistant:')
+print('  auth_providers:')
+print('    - type: homeassistant')
+if configRegistry.is_true('homeassistant/ldap/enabled', True):
+    print('    - type: command_line')
+    print('      command: /usr/local/bin/homeassistant-ucs-ldap-auth')
+    print('      meta: true')
+print('http:')
+print('  use_x_forwarded_for: true')
+print('  trusted_proxies:')
+print('    - ' + json.dumps(str(gateway)))
+print('default_config:')
+@!@
